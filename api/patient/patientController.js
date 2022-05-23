@@ -4,8 +4,11 @@ const {
   getPatientById,
   updatePatient,
   deletePatient,
+  getPatientByEmail,
 } = require("./patientService");
 const { genSaltSync, hashSync } = require("bcrypt");
+const { sign } = require("jsonwebtoken");
+const { compareSync } = require("bcrypt");
 module.exports = {
   createPatient: (req, res) => {
     const body = req.body;
@@ -90,8 +93,40 @@ module.exports = {
       }
       return res.json({
         success: 1,
-        message: "Deleted!"
-      })
+        message: "Deleted!",
+      });
+    });
+  },
+  //
+  login: (req, res) => {
+    const body = req.body;
+    getPatientByEmail(body.Email, (error, results) => {
+      if (error) {
+        console.log(error);
+      }
+      if (!results) {
+        return res.json({
+          success: 0,
+          data: "Ivalid email or password",
+        });
+      }
+      const result = compareSync(body.Pw, results.Pw);
+      if (result) {
+        results.Pw = undefined;
+        const jsontoken = sign({ result: results }, "qwe1234", {
+          expiresIn: "1h",
+        });
+        return res.json({
+          success: 1,
+          message: "Success!",
+          token: jsontoken,
+        });
+      } else {
+        return res.json({
+          success: 0,
+          data: "Invalid email or password",
+        });
+      }
     });
   },
 };

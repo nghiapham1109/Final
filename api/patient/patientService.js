@@ -87,4 +87,17 @@ module.exports = {
         return callBack(null, results[0]);
       };
   },
+  //
+  getPatientByEmail: (email, callBack) => {
+    pool.query(
+      `select * from patient where Email = ?`,
+      [email],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results[0]);
+      }
+    );
+  },
 };
