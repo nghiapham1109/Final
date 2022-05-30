@@ -1,15 +1,10 @@
 const pool = require("../../config/database");
 
 module.exports = {
-  create: (data, callBack) => {
+  create: (data, IDPatient, callBack) => {
     pool.query(
       `insert into booking(TimeBooking, Note, IDPatient, IDDoctor) values(?,?,?,?)`,
-      [
-        data.TimeBooking,
-        data.Note,
-        data.IDPatient,
-        data.IDDoctor,
-      ],
+      [data.TimeBooking, data.Note, IDPatient, data.IDDoctor],
       (error, results, fields) => {
         if (error) {
           return callBack(error);

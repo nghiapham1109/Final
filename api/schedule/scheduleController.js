@@ -1,8 +1,13 @@
 const { create, getSchedule } = require("./scheduleService");
+const jwt = require("jsonwebtoken");
 module.exports = {
   createSchedule: (req, res) => {
+    let token = req.get("authorization");
+    token = token.slice(7);
+    const decode = jwt.verify(token, "qwe1234");
+    const IDPatient = decode.result.IDPatient;
     const body = req.body;
-    create(body, (err, results) => {
+    create(body, IDPatient, (err, results) => {
       if (err) {
         console.log(err);
         return res.status(500).json({

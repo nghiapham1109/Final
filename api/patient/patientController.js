@@ -119,7 +119,8 @@ module.exports = {
         });
         const decode = jwt.decode(jsontoken);
         const verify = jwt.verify(jsontoken, "qwe1234");
-        console.log(verify.result.IDPatient, decode);
+        const takeIDPatient = verify.result.IDPatient;
+        console.log(takeIDPatient, decode);
         return res.json({
           success: 1,
           message: "Success!",
