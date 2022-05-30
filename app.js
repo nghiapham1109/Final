@@ -9,6 +9,8 @@ const doctorRouter = require("./api/doctor/doctorRouter");
 //
 const diseaseRouter = require("./api/disease/diseaseRouter");
 //
+const scheduleRouter = require("./api/schedule/scheduleRouter");
+//
 app.use(cors());
 app.use(express.json());
 //
@@ -17,6 +19,8 @@ app.use("/api/patient", patientRouter);
 app.use("/api/doctor", doctorRouter);
 //
 app.use("/api/disease", diseaseRouter);
+//
+app.use("/api/schedule", scheduleRouter);
 //
 app.listen(process.env.APP_PORT, () => {
   console.log("Server is running...", process.env.APP_PORT);

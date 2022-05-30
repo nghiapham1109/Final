@@ -8,6 +8,7 @@ const {
 } = require("./patientService");
 const { genSaltSync, hashSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const { compareSync } = require("bcrypt");
 module.exports = {
   createPatient: (req, res) => {
@@ -116,6 +117,9 @@ module.exports = {
         const jsontoken = sign({ result: results }, "qwe1234", {
           expiresIn: "1h",
         });
+        const decode = jwt.decode(jsontoken);
+        const verify = jwt.verify(jsontoken, "qwe1234");
+        console.log(verify.result.IDPatient, decode);
         return res.json({
           success: 1,
           message: "Success!",
