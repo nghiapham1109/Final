@@ -65,4 +65,17 @@ module.exports = {
       }
     );
   },
+  //
+  getScheduleOfDoctorById: (id, callBack) => {
+    pool.query(
+      `select IDBooking, TimeBooking, Note, IDDoctor, IDPatient, DayBooking from booking where IDDoctor = ?`,
+      [id],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
 };
