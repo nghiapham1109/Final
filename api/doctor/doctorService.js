@@ -25,4 +25,44 @@ module.exports = {
       }
     );
   },
+  //
+  getDoctorByEmail: (email, callBack) => {
+    pool.query(
+      `select * from doctor where Email = ?`,
+      [email],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results[0]);
+      }
+    );
+  },
+  //
+  create: (data, callBack) => {
+    pool.query(
+      `insert into doctor(IDDoctor, NameDoctor, DayOfBirth, Sex, Phone, HomeAddress, Specialist, Hospital, HospitalAddress, Image, Email,Pw, IDAdmin) values(?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+      [
+        data.IDDoctor,
+        data.NameDoctor,
+        data.DayOfBirth,
+        data.sex,
+        data.Phone,
+        data.HomeAddress,
+        data.Specialist,
+        data.Hospital,
+        data.HospitalAddress,
+        data.Image,
+        data.Email,
+        data.Pw,
+        data.IDAdmin,
+      ],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
 };

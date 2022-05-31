@@ -1,7 +1,14 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
-require("dotenv").config();
+app.use(cors({
+  origin:"*",
+  methods:["GET", "HEAD", "OPTIONS", "POST", "PUT", "DELETE"],
+  credentials:false
+}));
+//
+app.use(express.json());
 //
 const patientRouter = require("./api/patient/patientRouter");
 //
@@ -10,9 +17,6 @@ const doctorRouter = require("./api/doctor/doctorRouter");
 const diseaseRouter = require("./api/disease/diseaseRouter");
 //
 const scheduleRouter = require("./api/schedule/scheduleRouter");
-//
-app.use(cors());
-app.use(express.json());
 //
 app.use("/api/patient", patientRouter);
 //
