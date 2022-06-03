@@ -29,7 +29,7 @@ module.exports = {
         const decode = jwt.decode(jsontoken);
         const verify = jwt.verify(jsontoken, "qwe1234");
         const takeIDDoctor = verify.result.IDDoctor;
-        console.log(takeIDDoctor, decode);
+        // console.log(takeIDDoctor, decode);
         return res.json({
           success: 1,
           message: "Success!",
@@ -46,6 +46,7 @@ module.exports = {
   //
   getScheduleOfDoctorById: (req, res) => {
     const IDDoctor = req.params.IDDoctor;
+    console.log(IDDoctor);
     getScheduleOfDoctorById(IDDoctor, (err, results) => {
       if (err) {
         console.log(err);
