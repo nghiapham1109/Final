@@ -22,6 +22,8 @@ const scheduleRouter = require("./api/schedule/scheduleRouter");
 //
 const bookingRouter = require("./api/booking/bookingRouter");
 //
+const adminRouter = require("./api/admin/adminRouter");
+//
 app.use("/api/patient", patientRouter);
 //
 app.use("/api/doctor", doctorRouter);
@@ -31,6 +33,8 @@ app.use("/api/disease", diseaseRouter);
 app.use("/api/schedule", scheduleRouter);
 //
 app.use("/api/booking", bookingRouter);
+//
+app.use("/api/admin", adminRouter);
 //
 app.listen(process.env.APP_PORT, () => {
   console.log("Server is running...", process.env.APP_PORT);
