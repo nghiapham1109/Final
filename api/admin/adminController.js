@@ -1,4 +1,11 @@
-const { create, getAdminByEmail, getAdminById } = require("./adminService");
+const {
+  create,
+  getAdminByEmail,
+  getAdminById,
+  getDoctor,
+  getDoctorById,
+  updateDoctor,
+} = require("./adminService");
 const { genSaltSync, hashSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const jwt = require("jsonwebtoken");
@@ -73,6 +80,60 @@ module.exports = {
         });
       }
       return res.json({
+        success: 1,
+        data: results,
+      });
+    });
+  },
+  //
+  getDoctor: (req, res) => {
+    getDoctor((err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        data: results,
+      });
+    });
+  },
+  //
+  getDoctorById: (req, res) => {
+    const IDDoctor = req.params.IDDoctor;
+    getDoctorById(IDDoctor, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      if (!results) {
+        return res.json({
+          success: 0,
+          message: "Record not found",
+        });
+      }
+      return res.json({
+        success: 1,
+        data: results,
+      });
+    });
+  },
+  //
+  updateDoctor: (req, res) => {
+    let token = req.get("authorization");
+    token = token.slice(7);
+    const decode = jwt.verify(token, "qwe1234");
+    const IDAdmin = decode.result.IDAdmin;
+    const body = req.body;
+    updateDoctor(body, IDAdmin, (err, results) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          success: 0,
+          message: "Connection failed",
+        });
+      }
+      return res.status(200).json({
         success: 1,
         data: results,
       });
