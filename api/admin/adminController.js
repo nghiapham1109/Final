@@ -5,6 +5,7 @@ const {
   getDoctor,
   getDoctorById,
   updateDoctor,
+  getDisease,
 } = require("./adminService");
 const { genSaltSync, hashSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -137,6 +138,19 @@ module.exports = {
         });
       }
       return res.status(200).json({
+        success: 1,
+        data: results,
+      });
+    });
+  },
+  //
+  getDisease: (req, res) => {
+    getDisease((err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
         success: 1,
         data: results,
       });
