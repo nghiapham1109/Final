@@ -9,7 +9,7 @@ const router = require("express").Router();
 const { checkToken } = require("../../auth/token_validation");
 router.get("/", getDoctor);
 // router.get("/:IDDoctor", checkToken, getScheduleOfDoctorById);
-router.post("/", checkToken, createDoctor);
+router.post("/", createDoctor);
 router.get("/:IDDoctor", getDoctorById);
 router.post("/login", login);
 

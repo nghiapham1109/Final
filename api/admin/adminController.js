@@ -124,10 +124,13 @@ module.exports = {
     token = token.slice(7);
     const decode = jwt.verify(token, "qwe1234");
     const IDAdmin = decode.result.IDAdmin;
+    const IDDoctor = req.params.IDDoctor;
+    console.log("IDDoctor", IDDoctor);
     const body = req.body;
-    updateDoctor(body, IDAdmin, (err, results) => {
+    console.log(body);
+    updateDoctor(body, IDDoctor, IDAdmin, (err, results) => {
       if (err) {
-        console.log(err);
+        console.log("admin", err);
         return res.status(500).json({
           success: 0,
           message: "Connection failed",

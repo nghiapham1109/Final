@@ -65,25 +65,28 @@ module.exports = {
     );
   },
   //
-  updateDoctor: (data, IDAdmin, callBack) => {
+  updateDoctor: (data, IDDoctor, IDAdmin, callBack) => {
+    console.log("service", data.nameDoctor);
+
     pool.query(
       `update doctor set NameDoctor = ?, DayOfBirth = ?, sex = ?, Phone = ?, HomeAddress = ?, Specialist = ?, Hospital = ?, HospitalAddress = ?, Image = ?, Email = ?, Pw = ?, IDAdmin = ? where IDDoctor = ?`,
       [
-        data.NameDoctor,
-        data.DayOfBirth,
+        data.nameDoctor,
+        data.dayOfBirth,
         data.sex,
-        data.Phone,
-        data.HomeAddress,
-        data.Specialist,
-        data.Hospital,
-        data.HomeAddress,
-        data.Image,
-        data.Email,
-        data.Pw,
+        data.phone,
+        data.homeAddress,
+        data.specialist,
+        data.hospital,
+        data.homeAddress,
+        data.image,
+        data.email,
+        data.password,
         IDAdmin,
-        data.IDDoctor,
+        IDDoctor,
       ],
       (error, results, fields) => {
+        console.log(error, results, fields);
         if (error) {
           return callBack(error);
         }
@@ -93,7 +96,7 @@ module.exports = {
             message: "Update failed",
           });
         }
-        return callBack(null, results[0]);
+        return callBack(null, results);
       }
     );
   },

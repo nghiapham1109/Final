@@ -19,6 +19,6 @@ router.get("/", checkToken, getDoctor);
 //
 router.get("/:IDDoctor", checkToken, getDoctorById);
 //
-router.patch("/", checkToken, updateDoctor);
+router.put("/:IDDoctor", checkToken, updateDoctor);
 //
 module.exports = router;
