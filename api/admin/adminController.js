@@ -6,6 +6,7 @@ const {
   getDoctorById,
   updateDoctor,
   getDisease,
+  deleteDoctor,
 } = require("./adminService");
 const { genSaltSync, hashSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -140,6 +141,34 @@ module.exports = {
       return res.status(200).json({
         success: 1,
         data: results,
+      });
+    });
+  },
+  //
+  deleteDoctor: (req, res) => {
+    let token = req.get("authorization");
+    token = token.slice(7);
+    const decode = jwt.verify(token, "qwe1234");
+    const IDAdmin = decode.result.IDAdmin;
+    const IDDoctor = req.params.IDDoctor;
+    console.log("IDAdmin", IDAdmin);
+    console.log("IDDoctor", IDDoctor);
+    // const data = req.body;
+    // console.log(data);
+    deleteDoctor(IDDoctor, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      if (!results) {
+        return res.json({
+          success: 0,
+          message: "Record not found",
+        });
+      }
+      return res.json({
+        success: 1,
+        message: "Deleted!",
       });
     });
   },

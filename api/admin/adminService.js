@@ -66,8 +66,6 @@ module.exports = {
   },
   //
   updateDoctor: (data, IDDoctor, IDAdmin, callBack) => {
-    console.log("service", data.nameDoctor);
-
     pool.query(
       `update doctor set NameDoctor = ?, DayOfBirth = ?, sex = ?, Phone = ?, HomeAddress = ?, Specialist = ?, Hospital = ?, HospitalAddress = ?, Image = ?, Email = ?, Pw = ?, IDAdmin = ? where IDDoctor = ?`,
       [
@@ -95,6 +93,19 @@ module.exports = {
             success: 0,
             message: "Update failed",
           });
+        }
+        return callBack(null, results);
+      }
+    );
+  },
+  //
+  deleteDoctor: (IDDoctor, callBack) => {
+    pool.query(
+      `delete from doctor where IDDoctor = ?`,
+      [IDDoctor],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
         }
         return callBack(null, results);
       }
