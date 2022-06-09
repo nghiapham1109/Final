@@ -39,6 +39,33 @@ module.exports = {
     );
   },
   //
+  createDoctor: (data, IDAdmin, callBack) => {
+    pool.query(
+      `insert into doctor(IDDoctor, NameDoctor, DayOfBirth, Sex, Phone, HomeAddress, Specialist, Hospital, HospitalAddress, Image, Email,Pw, IDAdmin) values(?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+      [
+        data.IDDoctor,
+        data.nameDoctor,
+        data.dayOfBirth,
+        data.sex,
+        data.phone,
+        data.homeAddress,
+        data.specialist,
+        data.hospital,
+        data.hospitalAddress,
+        data.image,
+        data.email,
+        data.password,
+        IDAdmin,
+      ],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
+  //
   getDoctor: (callBack) => {
     pool.query(
       `select IDDoctor, NameDoctor, DayOfBirth, sex, Phone, HomeAddress, Specialist, Hospital, HospitalAddress, Image, Email, Pw, IDAdmin from doctor`,

@@ -1,5 +1,5 @@
 const {
-  create,
+  createDoctor,
   getAdminByEmail,
   getAdminById,
   getDoctor,
@@ -82,6 +82,29 @@ module.exports = {
         });
       }
       return res.json({
+        success: 1,
+        data: results,
+      });
+    });
+  },
+  //
+  createDoctor: (req, res) => {
+    let token = req.get("authorization");
+    token = token.slice(7);
+    const decode = jwt.verify(token, "qwe1234");
+    const IDAdmin = decode.result.IDAdmin;
+    const body = req.body;
+    const salt = genSaltSync(10);
+    body.password = hashSync(body.password, salt);
+    createDoctor(body, IDAdmin, (err, results) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          success: 0,
+          message: "Connection failed",
+        });
+      }
+      return res.status(200).json({
         success: 1,
         data: results,
       });
