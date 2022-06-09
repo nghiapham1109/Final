@@ -8,6 +8,8 @@ const {
   getDisease,
   deleteDoctor,
   createDoctor,
+  getDiseaseById,
+  updateDisease,
 } = require("./adminController");
 const router = require("express").Router();
 const { checkToken } = require("../../auth/token_validation");
@@ -20,9 +22,13 @@ router.post("/login", login);
 //
 router.post("/", checkToken, createDoctor);
 //
-router.get("/", checkToken, getDoctor);
-//
 router.get("/disease", checkToken, getDisease);
+//
+router.get("/disease/:IDDisease", checkToken, getDiseaseById);
+//
+router.put("/disease/:IDDisease", checkToken, updateDisease);
+//
+router.get("/", checkToken, getDoctor);
 //
 router.get("/:IDDoctor", checkToken, getDoctorById);
 //
@@ -30,5 +36,4 @@ router.put("/:IDDoctor", checkToken, updateDoctor);
 //
 router.delete("/:IDDoctor", checkToken, deleteDoctor);
 //
-
 module.exports = router;

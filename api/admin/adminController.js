@@ -5,8 +5,10 @@ const {
   getDoctor,
   getDoctorById,
   updateDoctor,
+  updateDisease,
   getDisease,
   deleteDoctor,
+  getDiseaseById,
 } = require("./adminService");
 const { genSaltSync, hashSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -88,6 +90,51 @@ module.exports = {
     });
   },
   //
+  getDiseaseById: (req, res) => {
+    const IDDisease = req.params.IDDisease;
+    getDiseaseById(IDDisease, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      if (!results) {
+        return res.json({
+          success: 0,
+          message: "Record not found",
+        });
+      }
+      return res.json({
+        success: 1,
+        data: results,
+      });
+    });
+  },
+  //
+  updateDisease: (req, res) => {
+    let token = req.get("authorization");
+    token = token.slice(7);
+    const decode = jwt.verify(token, "qwe1234");
+    const IDAdmin = decode.result.IDAdmin;
+    const IDDisease = req.params.IDDisease;
+    console.log("IDDisease", IDDisease);
+    // console.log("IDAdmin", IDAdmin);
+    const body = req.body;
+    console.log(body);
+    updateDisease(body, IDDisease, IDAdmin, (err, results) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          success: 0,
+          message: "Connection failed",
+        });
+      }
+      return res.status(200).json({
+        success: 1,
+        data: results,
+      });
+    });
+  },
+  //
   createDoctor: (req, res) => {
     let token = req.get("authorization");
     token = token.slice(7);
@@ -150,9 +197,9 @@ module.exports = {
     const decode = jwt.verify(token, "qwe1234");
     const IDAdmin = decode.result.IDAdmin;
     const IDDoctor = req.params.IDDoctor;
-    console.log("IDDoctor", IDDoctor);
+    // console.log("IDDoctor", IDDoctor);
     const body = req.body;
-    console.log(body);
+    // console.log(body);
     updateDoctor(body, IDDoctor, IDAdmin, (err, results) => {
       if (err) {
         console.log("admin", err);
@@ -174,8 +221,8 @@ module.exports = {
     const decode = jwt.verify(token, "qwe1234");
     const IDAdmin = decode.result.IDAdmin;
     const IDDoctor = req.params.IDDoctor;
-    console.log("IDAdmin", IDAdmin);
-    console.log("IDDoctor", IDDoctor);
+    // console.log("IDAdmin", IDAdmin);
+    // console.log("IDDoctor", IDDoctor);
     // const data = req.body;
     // console.log(data);
     deleteDoctor(IDDoctor, (err, results) => {
@@ -208,4 +255,5 @@ module.exports = {
       });
     });
   },
+  //
 };

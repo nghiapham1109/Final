@@ -151,4 +151,51 @@ module.exports = {
       }
     );
   },
+  //
+  getDiseaseById: (id, callBack) => {
+    pool.query(
+      `select IDDisease, NameDisease, Decription, Symptoms, Cause, Risk, Complication, Preparing, Tests, Treatment, LifeStyle, Prevention, IDAdmin from disease where IDDisease = ?`,
+      [id],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
+  //
+  updateDisease: (data, IDDisease, IDAdmin, callBack) => {
+    pool.query(
+      `update disease set NameDisease = ?, Decription = ?, Symptoms = ?, Cause = ?, Risk = ?, Complication = ?, Preparing = ?, Tests = ?, Treatment = ?, LifeStyle = ?, Prevention = ?, IDAdmin = ? where IDDisease = ?`,
+      [
+        data.nameDisease,
+        data.decription,
+        data.symptoms,
+        data.cause,
+        data.risk,
+        data.complication,
+        data.preparing,
+        data.tests,
+        data.treatment,
+        data.lifeStyle,
+        data.prevention,
+        IDAdmin,
+        IDDisease,
+      ],
+      (error, results, fields) => {
+        console.log(error, results, fields);
+        if (error) {
+          return callBack(error);
+        }
+        if (!results) {
+          return res.json({
+            success: 0,
+            message: "Update failed",
+          });
+        }
+        return callBack(null, results);
+      }
+    );
+  },
 };
