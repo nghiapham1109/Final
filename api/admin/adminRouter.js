@@ -10,6 +10,8 @@ const {
   createDoctor,
   getDiseaseById,
   updateDisease,
+  deleteDisease,
+  createDisease,
 } = require("./adminController");
 const router = require("express").Router();
 const { checkToken } = require("../../auth/token_validation");
@@ -27,6 +29,10 @@ router.get("/disease", checkToken, getDisease);
 router.get("/disease/:IDDisease", checkToken, getDiseaseById);
 //
 router.put("/disease/:IDDisease", checkToken, updateDisease);
+//
+router.delete("/disease/:IDDisease", checkToken, deleteDisease);
+//
+router.post("/disease", checkToken, createDisease);
 //
 router.get("/", checkToken, getDoctor);
 //

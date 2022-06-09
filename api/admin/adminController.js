@@ -9,6 +9,8 @@ const {
   getDisease,
   deleteDoctor,
   getDiseaseById,
+  deleteDisease,
+  createDisease,
 } = require("./adminService");
 const { genSaltSync, hashSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -121,6 +123,51 @@ module.exports = {
     const body = req.body;
     console.log(body);
     updateDisease(body, IDDisease, IDAdmin, (err, results) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          success: 0,
+          message: "Connection failed",
+        });
+      }
+      return res.status(200).json({
+        success: 1,
+        data: results,
+      });
+    });
+  },
+  //
+  deleteDisease: (req, res) => {
+    let token = req.get("authorization");
+    token = token.slice(7);
+    const decode = jwt.verify(token, "qwe1234");
+    const IDAdmin = decode.result.IDAdmin;
+    const IDDisease = req.params.IDDisease;
+    deleteDisease(IDDisease, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      if (!results) {
+        return res.json({
+          success: 0,
+          message: "Record not found",
+        });
+      }
+      return res.json({
+        success: 1,
+        message: "Deleted!",
+      });
+    });
+  },
+  //
+  createDisease: (req, res) => {
+    let token = req.get("authorization");
+    token = token.slice(7);
+    const decode = jwt.verify(token, "qwe1234");
+    const IDAdmin = decode.result.IDAdmin;
+    const body = req.body;
+    createDisease(body, IDAdmin, (err, results) => {
       if (err) {
         console.log(err);
         return res.status(500).json({

@@ -198,4 +198,44 @@ module.exports = {
       }
     );
   },
+  //
+  deleteDisease: (IDDisease, callBack) => {
+    pool.query(
+      `delete from disease where IDDisease = ?`,
+      [IDDisease],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
+  //
+  createDisease: (data, IDAdmin, callBack) => {
+    pool.query(
+      `insert into disease(IDDisease, NameDisease, Decription, Symptoms, Cause, Risk, Complication, Preparing, Tests, Treatment, LifeStyle, Prevention, IDAdmin) values(?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+      [
+        data.IDDisease,
+        data.nameDisease,
+        data.decription,
+        data.symptoms,
+        data.cause,
+        data.risk,
+        data.complication,
+        data.preparing,
+        data.tests,
+        data.treatment,
+        data.lifeStyle,
+        data.prevention,
+        IDAdmin,
+      ],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
 };
