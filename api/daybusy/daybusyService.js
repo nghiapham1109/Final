@@ -60,4 +60,30 @@ module.exports = {
       }
     );
   },
+  //
+  deleteDayBusy: (IDDayBusy, callBack) => {
+    pool.query(
+      `delete from daybusy where IDDayBusy = ?`,
+      [IDDayBusy],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
+  //
+  createDayBusy: (data, IDDoctor, callBack) => {
+    pool.query(
+      `insert into daybusy(IDDayBusy, TimeBusy, DayBusy, Note, IDDoctor) values(?,?,?,?,?)`,
+      [data.IDDayBusy, data.timeBusy, data.dayBusy, data.note, IDDoctor],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
 };
