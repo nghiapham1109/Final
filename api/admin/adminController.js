@@ -52,7 +52,7 @@ module.exports = {
       if (result) {
         results.Pw = undefined;
         const jsontoken = sign({ result: results }, "qwe1234", {
-          expiresIn: "1h",
+          expiresIn: "100d",
         });
         const decode = jwt.decode(jsontoken);
         const verify = jwt.verify(jsontoken, "qwe1234");

@@ -1,4 +1,8 @@
-const { create, getSchedule } = require("./scheduleService");
+const {
+  create,
+  getSchedule,
+  getScheduleByIDPatient,
+} = require("./scheduleService");
 const jwt = require("jsonwebtoken");
 module.exports = {
   createSchedule: (req, res) => {
@@ -27,6 +31,26 @@ module.exports = {
       if (err) {
         console.log(err);
         return;
+      }
+      return res.json({
+        success: 1,
+        data: results,
+      });
+    });
+  },
+  //
+  getScheduleByIDPatient: (req, res) => {
+    const IDPatient = req.params.IDPatient;
+    getScheduleByIDPatient(IDPatient, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      if (!results) {
+        return res.json({
+          success: 0,
+          message: "Record not found",
+        });
       }
       return res.json({
         success: 1,

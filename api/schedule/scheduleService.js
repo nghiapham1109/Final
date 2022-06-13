@@ -26,4 +26,17 @@ module.exports = {
       }
     );
   },
+  //
+  getScheduleByIDPatient: (id, callBack) => {
+    pool.query(
+      `select doctor.NameDoctor, booking.* from doctor inner join booking on doctor.IDDoctor=booking.IDDoctor where IDPatient = ?`,
+      [id],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
 };
