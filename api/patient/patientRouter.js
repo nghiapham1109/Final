@@ -8,7 +8,7 @@ const {
 } = require("./patientController");
 const router = require("express").Router();
 const { checkToken } = require("../../auth/token_validation");
-router.post("/", checkToken, createPatient);
+router.post("/", createPatient);
 router.get("/", checkToken, getPatient);
 router.get("/:IDPatient", checkToken, getPatientById);
 router.put("/:IDPatient", checkToken, updatePatient);

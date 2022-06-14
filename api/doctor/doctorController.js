@@ -4,6 +4,7 @@ const {
   getDoctorById,
   getDoctorByEmail,
   getScheduleOfDoctorById,
+  getBusyDayOfDoctorById,
 } = require("./doctorService");
 const { genSaltSync, hashSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -66,6 +67,26 @@ module.exports = {
   getScheduleOfDoctorById: (req, res) => {
     const IDDoctor = req.params.IDDoctor;
     getScheduleOfDoctorById(IDDoctor, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      if (!results) {
+        return res.json({
+          success: 0,
+          message: "Record not found",
+        });
+      }
+      return res.json({
+        success: 1,
+        data: results,
+      });
+    });
+  },
+  //
+  getBusyDayOfDoctorById: (req, res) => {
+    const IDDoctor = req.params.IDDoctor;
+    getBusyDayOfDoctorById(IDDoctor, (err, results) => {
       if (err) {
         console.log(err);
         return;

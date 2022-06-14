@@ -1,10 +1,11 @@
 const pool = require("../../config/database");
 
 module.exports = {
-  create: (data, callBack) => {
+  createPatient: (data, callBack) => {
     pool.query(
-      `insert into patient(NamePatient, DayOfBirth, Sex, Phone, HomeAddress, Email, Pw, IDAdmin) values(?,?,?,?,?,?,?,?)`,
+      `insert into patient(IDPatient, NamePatient, DayOfBirth, Sex, Phone, HomeAddress, Email, Pw, IDAdmin) values(?,?,?,?,?,?,?,?,?)`,
       [
+        data.IDPatient,
         data.NamePatient,
         data.DayOfBirth,
         data.Sex,

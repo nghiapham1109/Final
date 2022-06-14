@@ -1,5 +1,5 @@
 const {
-  create,
+  createPatient,
   getPatient,
   getPatientById,
   updatePatient,
@@ -15,7 +15,7 @@ module.exports = {
     const body = req.body;
     const salt = genSaltSync(10);
     body.Pw = hashSync(body.Pw, salt);
-    create(body, (err, results) => {
+    createPatient(body, (err, results) => {
       if (err) {
         console.log(err);
         return res.status(500).json({
