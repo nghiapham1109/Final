@@ -49,19 +49,20 @@ module.exports = {
     );
   },
   //
-  updatePatient: (data, callBack) => {
+  updatePatient: (data, IDAdmin, IDPatient, callBack) => {
+    console.log("Patient", data);
     pool.query(
       `update patient set NamePatient = ?, DayOfBirth = ?, Sex = ?, Phone = ?, HomeAddress = ?, Email = ?, Pw = ?, IDAdmin = ? where IDPatient = ?`,
       [
-        data.IDPatient,
-        data.NamePatient,
-        data.DayOfBirth,
-        data.Sex,
-        data.Phone,
-        data.HomeAddress,
-        data.Email,
-        data.Pw,
-        data.IDAdmin,
+        data.namePatient,
+        data.dayOfBirth,
+        data.sex,
+        data.phone,
+        data.homeAddress,
+        data.email,
+        data.password,
+        IDAdmin,
+        IDPatient,
       ],
       (error, results, fields) => {
         if (error) {
@@ -73,7 +74,7 @@ module.exports = {
             message: "Update failed",
           });
         }
-        return callBack(null, results[0]);
+        return callBack(null, results);
       }
     );
   },

@@ -11,7 +11,7 @@ const { checkToken } = require("../../auth/token_validation");
 router.post("/", checkToken, createPatient);
 router.get("/", checkToken, getPatient);
 router.get("/:IDPatient", checkToken, getPatientById);
-router.patch("/", checkToken, updatePatient);
+router.put("/:IDPatient", checkToken, updatePatient);
 router.delete("/", checkToken, deletePatient);
 router.post("/login", login);
 

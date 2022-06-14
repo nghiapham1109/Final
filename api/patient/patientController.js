@@ -64,17 +64,22 @@ module.exports = {
   },
   //
   updatePatient: (req, res) => {
+    let token = req.get("authorization");
+    token = token.slice(7);
+    const decode = jwt.verify(token, "qwe1234");
+    const IDAdmin = decode.result.IDAdmin;
+    const IDPatient = req.params.IDPatient;
+    console.log("Patient", IDPatient);
+    console.log("IDAdmin", IDAdmin);
     const body = req.body;
-    const salt = genSaltSync(10);
-    body.Pw = hashSync(body.Pw, salt);
-    updatePatient(body, (err, results) => {
+    updatePatient(body, IDAdmin, IDPatient, (err, results) => {
       if (err) {
         console.log(err);
         return;
       }
       return res.json({
         success: 1,
-        message: "Successfully",
+        message: results,
       });
     });
   },
@@ -115,7 +120,7 @@ module.exports = {
       if (result) {
         results.Pw = undefined;
         const jsontoken = sign({ result: results }, "qwe1234", {
-          expiresIn: "1h",
+          expiresIn: "10h",
         });
         const decode = jwt.decode(jsontoken);
         const verify = jwt.verify(jsontoken, "qwe1234");
