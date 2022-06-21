@@ -5,6 +5,7 @@ const {
   getDoctorByEmail,
   getScheduleOfDoctorById,
   getBusyDayOfDoctorById,
+  getDoctorBySpecialist,
 } = require("./doctorService");
 const { genSaltSync, hashSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -106,6 +107,7 @@ module.exports = {
   //
   login: (req, res) => {
     const body = req.body;
+    console.log("email", body);
     getDoctorByEmail(body.Email, (error, results) => {
       if (error) {
         console.log(error);
@@ -137,6 +139,27 @@ module.exports = {
           data: "Invalid email or password",
         });
       }
+    });
+  },
+  //
+  getDoctorBySpecialist: (req, res) => {
+    // const body = req.body;
+    console.log("BodyDoctorRQ", req.params);
+    getDoctorBySpecialist( req.params.Specialist, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      if (!results) {
+        return res.json({
+          success: 0,
+          message: "Record not found",
+        });
+      }
+      return res.json({
+        success: 1,
+        data: results,
+      });
     });
   },
 };

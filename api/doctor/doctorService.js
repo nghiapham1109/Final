@@ -103,6 +103,16 @@ module.exports = {
       }
     );
   },
-
-  //
+  getDoctorBySpecialist: (Specialist, callBack) => {
+    pool.query(
+      `select * from doctor where Specialist = ?`,
+      [Specialist],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
 };
