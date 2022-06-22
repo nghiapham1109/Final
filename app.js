@@ -1,6 +1,10 @@
 require("dotenv").config();
 const express = require("express");
+const { createServer } = require("http");
+const { Server } = require("socket.io");
 const app = express();
+const httpServer = createServer(app);
+//
 const cors = require("cors");
 app.use(
   cors({
@@ -26,6 +30,9 @@ const adminRouter = require("./api/admin/adminRouter");
 //
 const daybusyRouter = require("./api/daybusy/daybusyRouter");
 //
+const notificationRouter = require("./api/notification/notificationRouter");
+const { socketConnection } = require("./utils/socket");
+//
 app.use("/api/patient", patientRouter);
 //
 app.use("/api/doctor", doctorRouter);
@@ -40,6 +47,9 @@ app.use("/api/admin", adminRouter);
 //
 app.use("/api/daybusy", daybusyRouter);
 //
-app.listen(process.env.APP_PORT, () => {
+app.use("/api/notification", notificationRouter);
+//
+socketConnection(httpServer);
+httpServer.listen(process.env.APP_PORT, () => {
   console.log("Server is running...", process.env.APP_PORT);
 });

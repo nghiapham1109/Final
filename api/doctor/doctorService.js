@@ -103,6 +103,7 @@ module.exports = {
       }
     );
   },
+  //
   getDoctorBySpecialist: (Specialist, callBack) => {
     pool.query(
       `select * from doctor where Specialist = ?`,
@@ -115,4 +116,18 @@ module.exports = {
       }
     );
   },
+  //
+  getNotificationOfDoctorById: (id, callBack) => {
+    pool.query(
+      `select booking.TimeBooking, booking.DayBooking, booking.IDDoctor, notification.*, patient.NamePatient from booking inner join notification on booking.IDBooking=notification.IDBooking join patient on booking.IDPatient = patient.IDPatient where IDDoctor = ?`,
+      [id],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
+
 };
