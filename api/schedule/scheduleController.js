@@ -26,6 +26,7 @@ module.exports = {
       // create booking success (already done)
       // -> get newest booking from db  (how ?)
       const IDDoctor = body.IDDoctor;
+      sendEmptyMessage(`new-schedule-${IDDoctor}`);
       getScheduleOfDoctorById(IDDoctor, (err, bookingList) => {
         if (bookingList) {
           // get the newest booking

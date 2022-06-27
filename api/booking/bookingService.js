@@ -16,7 +16,7 @@ module.exports = {
   //
   getScheduleOfDoctorById: (id, callBack) => {
     pool.query(
-      `select patient.NamePatient, booking.* from patient inner join booking on patient.IDPatient=booking.IDPatient where IDDoctor = ?`,
+      `select patient.NamePatient,patient.Phone, booking.* from patient inner join booking on patient.IDPatient=booking.IDPatient where IDDoctor = ?`,
       [id],
       (error, results, fields) => {
         if (error) {
